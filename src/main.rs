@@ -1,4 +1,6 @@
 use clap::{App, Arg};
+use ureq::Agent;
+use std::time::Duration;
 
 fn main() -> Result<(),ureq::Error>{
     let app = App::new("Furl the Ferris URL Client")
@@ -14,8 +16,12 @@ fn main() -> Result<(),ureq::Error>{
                 .required(true),
         )
         .get_matches();
+      let agent: Agent = ureq::AgentBuilder::new()
+          .timeout_read(Duration::from_secs(5))
+          .timeout_write(Duration::from_secs(5))
+          .build();
     let url = app.value_of("url").unwrap_or("https://httpbin.org/get");
-    let req = ureq::get(url).call()?.into_string()?;
+    let req = agent.get(url).call()?.into_string()?;
     println!("{}", req);
     Ok(())
 }
