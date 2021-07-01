@@ -1,0 +1,11 @@
+[package]
+name = "furl"
+version = "0.1.0"
+authors = ["TeoDev1611 <malehurtadoreyes@hotmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ureq = "2.1.1"
+clap = "2.33.3"
