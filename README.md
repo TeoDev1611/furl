@@ -14,6 +14,8 @@
 cargo build
 ```
 
+Or Go to the release page and Use the binary
+
 ## Example of commands
 
 ```
