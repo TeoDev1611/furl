@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 ureq = "2.1.1"
 clap = "2.33.3"
+colored_json = "2"

@@ -1,4 +1,5 @@
 use clap::{App, Arg};
+use colored_json::ToColoredJson;
 use std::time::Duration;
 use ureq::Agent;
 
@@ -28,9 +29,14 @@ fn main() -> Result<(), ureq::Error> {
         .timeout_write(Duration::from_secs(5))
         .build();
     let url = app.value_of("url").unwrap_or("https://httpbin.org/get");
-    let req = agent.get(url).call()?.into_string()?;
-    let headers = app.value_of("header").unwrap_or("Content-A");
-    println!("{}",headers);
-    println!("{}", req);
+    let headers = app.value_of("header").unwrap_or("Application-json").split("-");
+    let vec = headers.collect::<Vec<&str>>();
+    let req = agent.get(url).set(vec[0], vec[1]).call()?.into_string()?;
+    color_json(req);
+    Ok(())
+}
+
+fn color_json(text: String) -> ::std::result::Result<(), Box<::std::error::Error>>{
+    println!("{}", text.to_colored_json_auto()?);
     Ok(())
 }
